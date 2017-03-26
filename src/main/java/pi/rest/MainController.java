@@ -3,6 +3,7 @@ package pi.rest;
 import java.io.IOException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pi.domain.StatusDTO;
@@ -19,5 +20,10 @@ public class MainController {
         status.setUptime(CommandExecutor.run("uptime"));
         
         return status;
+    }
+    
+    @GetMapping("/shell")
+    public String shell(@RequestParam(value = "cmd", defaultValue = "") String command) throws InterruptedException, IOException {
+        return CommandExecutor.run(command);
     }
 }
